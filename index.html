@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kopi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Head Icon -->
+    <link rel="icon" href="img/header_kopi.jpg" />
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- Alpine Js -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- Midtrans -->
+    <script
+      type="text/javascript"
+      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      data-client-key="SB-Mid-client-rdLoLnkQ_cl6QFsz"
+    ></script>
+  </head>
+
+  <body>
+    <!-- Navbar start -->
+    <nav class="navbar" x-data>
+      <a href="#" class="navbar-logo">kopi<span>kenangan</span></a>
+
+      <div class="navbar-nav">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#menu">Menu</a>
+        <a href="#products">Products</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="navbar-extra">
+        <a href="#" id="search-btn"><i data-feather="search"></i></a>
+        <a href="#" id="shopping-cart-btn"
+          ><i data-feather="shopping-cart"></i>
+          <span
+            class="quantity-badge"
+            x-text="$store.cart.quantity"
+            x-show="$store.cart.quantity"
+          ></span
+        ></a>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
+
+      <!-- Search From Start -->
+      <div class="search-form">
+        <input type="search" id="search-box" placeholder="search here..." />
+        <label for="search-box"><i data-feather="search"></i></label>
+      </div>
+      <!-- Search From End -->
+
+      <!-- Shopping Cart Start -->
+      <div class="shopping-cart">
+        <template x-for="(item, index) in $store.cart.items" x-keys="index">
+          <div class="cart-item">
+            <img
+              :src="`img/products/${item.img}`"
+              height="250"
+              :alt="item.name"
+            />
+            <div class="item-detail">
+              <h3 x-text="item.name"></h3>
+              <div class="item-price">
+                <span x-text="rupiah(item.price)"></span>
+                <button id="remove" @click="$store.cart.remove(item.id)">
+                  &minus;</button
+                >&times;
+                <span x-text="item.quantity"></span>
+                <button id="add" @click="$store.cart.add(item)">&plus;</button
+                >&equals;
+                <span x-text="rupiah(item.total)"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+        <h4 x-show="!$store.cart.items.length" class="empty">Cart is Empty</h4>
+        <h4 x-show="$store.cart.items.length">
+          Total: <span x-text="rupiah($store.cart.total)"></span>
+        </h4>
+
+        <!-- Form Customer -->
+        <div class="form-container" x-show="$store.cart.items.length">
+          <form action="" id="checkout-form">
+            <!-- Hidden input -->
+            <input
+              type="hidden"
+              name="items"
+              x-model="JSON.stringify($store.cart.items)"
+            />
+            <input type="hidden" name="total" x-model="$store.cart.total" />
+
+            <!-- User input -->
+            <h3>Customer Detail</h3>
+            <label for="name">
+              <span>Name :</span>
+              <input type="text" name="name" id="name" class="input-form" />
+            </label>
+
+            <label for="email">
+              <span>Email :</span>
+              <input type="email" name="email" id="email" class="input-form" />
+            </label>
+
+            <label for="phone">
+              <span>Phone :</span>
+              <input type="number" name="phone" id="phone" class="input-form" />
+            </label>
+
+            <button
+              type="submit"
+              class="checkout-btn disabled"
+              id="checkout-btn"
+            >
+              Checkout
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Shopping Cart End -->
+    </nav>
+    <!-- Navbar end -->
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <main class="content">
+        <h1>Mari Nikmati Secangkir <span>Kopi</span></h1>
+        <p>
+          Cara terbaik lewati hari dengan nikmati secangkir kopi. Yuk ngopi!
+        </p>
+        <a href="#" class="cta">Beli Sekarang</a>
+      </main>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- About Section -->
+    <section id="about" class="about">
+      <h2><span>Tentang</span> Kami</h2>
+
+      <div class="row">
+        <div class="about-img">
+          <img src="./img/header_kopi.jpg" alt="Tentang Kami" />
+        </div>
+        <div class="content">
+          <h3>Kenapa memiilih kopi kami?</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+            distinctio, similique voluptates in qui illo!
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima cum
+            nostrum aut quaerat sequi asperiores fugiat aperiam quisquam autem
+            iste!
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- About Section End -->
+
+    <!-- Menu Section Start -->
+    <section id="menu" class="menu">
+      <h2><span>Menu</span> Kami</h2>
+
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae illo
+        architecto optio aperiam totam ipsa!
+      </p>
+
+      <div class="row">
+        <div class="menu-card">
+          <img
+            src="img/products/1.jpg"
+            height="250"
+            alt="Espreso"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-title">- Robusta Brazil -</h3>
+          <p class="menu-card-price">IDR 20K</p>
+        </div>
+        <div class="menu-card">
+          <img
+            src="img/products/2.jpeg"
+            height="250"
+            alt="Espreso"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-title">- Robusta Saiyo -</h3>
+          <p class="menu-card-price">IDR 25K</p>
+        </div>
+        <div class="menu-card">
+          <img
+            src="img/products/3.jpg"
+            height="250"
+            alt="Espreso"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-title">- Espresso Arabic -</h3>
+          <p class="menu-card-price">IDR 30K</p>
+        </div>
+        <div class="menu-card">
+          <img
+            src="img/products/4.jpg"
+            height="250"
+            alt="Espreso"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-title">- Bubuk Borontoseno -</h3>
+          <p class="menu-card-price">IDR 35K</p>
+        </div>
+        <div class="menu-card">
+          <img
+            src="img/products/5.jpeg"
+            height="250"
+            alt="Espreso"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-title">- Vcafe Brazilian -</h3>
+          <p class="menu-card-price">IDR 45K</p>
+        </div>
+        <div class="menu-card">
+          <img
+            src="img/products/6.jpeg"
+            height="250"
+            alt="Espreso"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-title">- Nescafe Classic -</h3>
+          <p class="menu-card-price">- Stok Habis -</p>
+        </div>
+        <div class="menu-card">
+          <img
+            src="img/products/7.jpeg"
+            height="250"
+            alt="Espreso"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-title">- Good Day Cappucino -</h3>
+          <p class="menu-card-price">- Stok Habis -</p>
+        </div>
+      </div>
+    </section>
+    <!-- Menu Section End -->
+
+    <!-- Product Section Start -->
+    <section class="products" id="products" x-data="products">
+      <h2><span>Produk Unggulan</span> Kami</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas dolorem
+        consequatur nemo sed doloribus pariatur.
+      </p>
+      <div class="row">
+        <template x-for="(item, index) in items" x-key="index">
+          <div class="product-card">
+            <div class="product-icons">
+              <a href="#" @click.prevent="$store.cart.add(item)"
+                ><svg class="feather">
+                  <use href="img/feather-sprite.svg#shopping-cart" /></svg
+              ></a>
+              <a href="#" class="item-detail-btn"
+                ><svg class="feather">
+                  <use href="img/feather-sprite.svg#eye" /></svg
+              ></a>
+            </div>
+            <div class="product-img">
+              <img :src="`./img/products/${item.img}`" :alt="item.name" />
+            </div>
+            <div class="product-content">
+              <h3 x-text="item.name"></h3>
+              <div class="product-stars">
+                <svg class="feather-star">
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+                <svg class="feather-star">
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+                <svg class="feather-star">
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+                <svg class="feather-star">
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+                <svg class="feather-star">
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+              </div>
+              <div class="product-price">
+                <span x-text="rupiah(item.price)"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+    <!-- Product Section End -->
+
+    <!-- Contact Section Start -->
+    <section id="contact" class="contact">
+      <h2><span>Kontak</span> Kami</h2>
+
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae illo
+        architecto optio aperiam totam ipsa!
+      </p>
+
+      <div class="row">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.3255670332387!2d107.32981497316939!3d-6.351880162138347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69766365e1ec51%3A0x1ac83b9be2c4af92!2sPT.%20DIC%20Graphics!5e0!3m2!1sid!2sid!4v1707208241265!5m2!1sid!2sid"
+          width="600"
+          height="450"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="map"
+        ></iframe>
+
+        <form action="" method="post">
+          <div class="input-group">
+            <i data-feather="user"></i>
+            <input type="text" placeholder="nama" />
+          </div>
+          <div class="input-group">
+            <i data-feather="mail"></i>
+            <input type="text" placeholder="email" />
+          </div>
+          <div class="input-group">
+            <i data-feather="phone"></i>
+            <input type="text" placeholder="no. hp" />
+          </div>
+          <button type="submit" name="kirim" class="btn">Kirim</button>
+        </form>
+      </div>
+    </section>
+    <!-- Contact Section End -->
+
+    <!-- Footer Start -->
+    <footer>
+      <!-- Arrow Up Start -->
+      <a href="#" class="to-top"
+        ><i data-feather="arrow-up-circle" class="arrow"></i
+      ></a>
+      <!-- Arrow Up End -->
+      <div class="socials">
+        <a href="#"><i data-feather="instagram"></i></a>
+        <a href="#"><i data-feather="facebook"></i></a>
+        <a href="#"><i data-feather="linkedin"></i></a>
+      </div>
+
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="credit">
+        <p>
+          Created by <a href="mfajarramadhan.netlify.app">mfajarramadhan</a> |
+          &copy; 2024
+        </p>
+      </div>
+    </footer>
+    <!-- Footer End -->
+
+    <!-- Modal Box Item Detail Start -->
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="./img/products/2.jpeg" alt="" />
+          <div class="produk-content">
+            <h3>Produk Kopi</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Non
+              aliquam odit dignissimos modi magnam nulla ea sit nisi rem ab
+              reprehenderit optio, sunt minus vitae?
+            </p>
+            <div class="product-stars">
+              <i data-feather="star" class="full"></i>
+              <i data-feather="star" class="full"></i>
+              <i data-feather="star" class="full"></i>
+              <i data-feather="star"></i>
+              <i data-feather="star"></i>
+            </div>
+            <div class="product-price">IDR 30K <span>IDR 55K</span></div>
+            <a href="#"
+              ><i data-feather="shopping-cart"></i><span>add to cart</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Box Item Detail End -->
+
+    <!-- Feather Icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- My Script -->
+    <script src="js/script.js"></script>
+
+    <!-- Alpine.js -->
+    <script src="src/app.js"></script>
+  </body>
+</html>
